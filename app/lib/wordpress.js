@@ -3,21 +3,33 @@
 const API_URL = `${process.env.WORDPRESS_URL}/wp-json/wp/v2`;
 
 export async function getPosts() {
-  const response = await fetch(`${API_URL}/posts`);
+  const response = await fetch(`${API_URL}/posts?_embed`);
+
+  if (!response.ok) {
+    throw new Error(`WordPress responded with ${response.status}`);
+  }
 
   const posts = await response.json();
   return posts;
 }
 
 export async function getLatestPosts() {
-  const response = await fetch(`${API_URL}/posts?per_page=3`);
+  const response = await fetch(`${API_URL}/posts?per_page=3&_embed`);
+
+  if (!response.ok) {
+    throw new Error(`WordPress responded with ${response.status}`);
+  }
 
   const posts = await response.json();
   return posts;
 }
 
 export async function getPostBySlug(slug) {
-  const response = await fetch(`${API_URL}/posts?slug=${slug}`);
+  const response = await fetch(`${API_URL}/posts?slug=${slug}&_embed`);
+
+  if (!response.ok) {
+    throw new Error(`WordPress responded with ${response.status}`);
+  }
 
   // WordPress always returns an array, even for a single match
   const posts = await response.json();
@@ -25,7 +37,11 @@ export async function getPostBySlug(slug) {
 }
 
 export async function getPageBySlug(slug) {
-  const response = await fetch(`${API_URL}/pages?slug=${slug}`);
+  const response = await fetch(`${API_URL}/pages?slug=${slug}&_embed`);
+
+  if (!response.ok) {
+    throw new Error(`WordPress responded with ${response.status}`);
+  }
 
   // WordPress always returns an array, even for a single match
   const pages = await response.json();
