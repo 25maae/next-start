@@ -1,26 +1,17 @@
-import PostCard from "@/components/PostCard";
-import styles from "./page.module.css";
+import PostList from "@/components/PostList";
+import { getPosts } from "../lib/wordpress";
 
-async function getPosts(wordpressUrl) {
-  "use cache";
-  const response = await fetch(`${wordpressUrl}/wp-json/wp/v2/posts`);
-  return response.json();
-}
+export const metadata = {
+  title: "Posts",
+};
 
 export default async function PostsPage() {
-  const posts = await getPosts(process.env.WORDPRESS_URL);
+  const posts = await getPosts();
+
   return (
     <main>
       <h1>Posts</h1>
-      {posts.length === 0 ? (
-        <p>There are no posts yet.</p>
-      ) : (
-        <section className={styles.grid}>
-          {posts.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
-        </section>
-      )}
+      <PostList posts={posts} />
     </main>
   );
 }
