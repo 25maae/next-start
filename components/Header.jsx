@@ -1,5 +1,7 @@
 import Link from "next/link";
 import styles from "./Header.module.css";
+import { Suspense } from "react";
+import AuthStatus from "./AuthStatus";
 
 export default function Header() {
   return (
@@ -21,12 +23,9 @@ export default function Header() {
           <li>
             <Link href="/profile">Profile</Link>
           </li>
-          <li>
-            <Link href="/signup">Sign up</Link>
-          </li>
-          <li>
-            <Link href="/login">Log in</Link>
-          </li>
+          <Suspense fallback={null}>
+            <AuthStatus />
+          </Suspense>
         </ul>
       </nav>
     </header>
