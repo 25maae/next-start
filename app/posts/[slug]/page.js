@@ -1,8 +1,16 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { getCurrentUser } from "@/app/lib/supabase/auth";
+import { getPostBySlug } from "@/app/lib/wordpress";
+import { formatDate } from "@/app/lib/format";
 import styles from "./page.module.css";
 
 export default async function PostPage({ params }) {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    redirect("/login");
+  }
   const { slug } = await params;
   const response = await fetch(
     `${process.env.WORDPRESS_URL}/wp-json/wp/v2/posts?slug=${slug}`,
