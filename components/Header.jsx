@@ -18,6 +18,15 @@ export default function Header() {
           <li>
             <Link href="/about">About</Link>
           </li>
+          <li>
+            <Link href="/profile">Profile</Link>
+          </li>
+          <li>
+            <Link href="/signup">Sign up</Link>
+          </li>
+          <li>
+            <Link href="/login">Log in</Link>
+          </li>
         </ul>
       </nav>
     </header>
